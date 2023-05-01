@@ -11,13 +11,13 @@ This analysis helps detect the growth or reduction of marine plants, which are i
 ### Datasource1: Chlorophyll-a im Meerwasser - Serie 
 * Metadata URL: https://mobilithek.info/offers/-7508543878210012949
 * Data URL: https://www.geoseaportal.de/atomfeeds/MO_H_CHLA_de.xml
-* Data Type: txt
+* Data Type: txt</br>
 Level of chlorophyll a in the North and Baltic Seas of Germany from 2017 till now.
 
 ### Datasource2: Temperatur des Meerwassers - Serie 
 * Metadata URL: https://mobilithek.info/offers/-832924192195927122
 * Data URL: https://www.geoseaportal.de/atomfeeds/MO_H_TEMP_de.xml
-* Data Type: txt
+* Data Type: txt</br>
 Seawater temperature in the North and Baltic Seas of Germany from 2017 till now.
 
 ## Work Packages
