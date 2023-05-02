@@ -24,7 +24,7 @@ Seawater temperature in the North and Baltic Seas of Germany from 2017 till now.
 
 ## Work Packages
 
-1. Jupyter notebook. [#1] (https://github.com/kreisligaspieler/2023-amse/issues/4) 
+1. Jupyter notebook. [#1](https://github.com/kreisligaspieler/2023-amse/issues/4) 
 2. Import data sources [#2](https://github.com/kreisligaspieler/2023-amse/issues/1) 
 3. Calculate data and gernerate graphs [#3](https://github.com/kreisligaspieler/2023-amse/issues/2)
-4. Evaluation [#4] (https://github.com/kreisligaspieler/2023-amse/issues/3) 
+4. Evaluation [#4](https://github.com/kreisligaspieler/2023-amse/issues/3) 
