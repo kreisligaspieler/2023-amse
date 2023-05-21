@@ -3,4 +3,4 @@ from sqlalchemy import create_engine
 
 engine = create_engine('sqlite:///./airports.sqlite')
 df = pd.read_csv("https://opendata.rhein-kreis-neuss.de/api/v2/catalog/datasets/rhein-kreis-neuss-flughafen-weltweit/exports/csv",sep=';') 
-df.to_sql("airports", con=engine)
+df.to_sql("airports", con=engine, index=False)
