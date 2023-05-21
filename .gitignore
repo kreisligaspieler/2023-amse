@@ -1,2 +1,3 @@
 /data/database.sqlite
+/exercises/airports.sqlite
 !.gitignore
