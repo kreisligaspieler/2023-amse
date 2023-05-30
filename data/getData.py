@@ -5,7 +5,7 @@ import pandas as pd
 from sqlalchemy import create_engine
 
 
-engine = create_engine('sqlite:///./data/data.sqlite')
+engine = create_engine('sqlite:///../data/data.sqlite')
 df = pd.read_csv("https://data.bsh.de/OpenData/DOD/MO_H_CHLA/MO_H_CHLA_2018.txt",sep='\t',skiprows=103, encoding='ISO-8859-15', skip_blank_lines=True, header=0, names=["Cruise", "Station","Type", "Date", "Longitude [degrees_east]", "Latitude [degrees_north]", "LOCAL_CDI_ID","EDMO_code", "Bot Depth [m]", "Depth [m]", "QV_1", "CHLA_FLM_FGN_AL [µg/l]", "QV_2", "CHLA_SENE_DEV_NDT [µg/l]", "QV_3", " "],usecols=range(15))
 df.to_sql("CHLA_18", con=engine, index=False)
 
