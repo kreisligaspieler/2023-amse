@@ -17,4 +17,6 @@ df = pd.read_csv("https://data.bsh.de/OpenData/DOD/MO_H_TEMP/MO_H_TEMP_2018.txt"
 df.to_sql("TEMP_18", con=engine, index=False)
 
 df = pd.read_csv("https://data.bsh.de/OpenData/DOD/MO_H_TEMP/MO_H_TEMP_2022.txt",sep='\t',skiprows=91, encoding='ISO-8859-15', skip_blank_lines=True, header=0, names=["Cruise", "Station","Type", "Date", "Longitude [degrees_east]", "Latitude [degrees_north]", "LOCAL_CDI_ID","EDMO_code", "Bot Depth [m]", "Depth [m]", "QV_1", "TEMP_THE_NOT_NDT[°C]", "QV_2"],usecols=range(13))
-df.to_sql("TEMP_22", con=engine, index=False)   
+df.to_sql("TEMP_22", con=engine, index=False)  
+
+ 
