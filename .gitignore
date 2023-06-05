@@ -1,3 +1,4 @@
 /data/data.sqlite
 /airports.sqlite
+/exercise/trainstops.sqlite
 !.gitignore

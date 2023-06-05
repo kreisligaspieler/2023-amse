@@ -1,0 +1,104 @@
+pipeline TrainstopsPipeline {
+
+	constraint VerkehrConstraint oftype AllowlistConstraint {
+ 		allowlist: ["FV", "RV", "nur DPN"];
+	}
+	valuetype Verkehr oftype text {
+    	constraints: [ VerkehrConstraint ];
+	}
+
+	constraint LaengeBreiteConstraint oftype RangeConstraint {
+ 		lowerBound: -90;
+		lowerBoundInclusive: true;
+		upperBound: 90;
+		upperBoundInclusive: true;	
+	}
+
+	valuetype LaengeBreite oftype decimal {
+    	constraints: [ LaengeBreiteConstraint ];
+	}
+
+	constraint IFOPTConstraint oftype RegexConstraint {
+  		regex: /[a-z]{2}:\d+:\d+(:\d+)/;
+	}
+
+	valuetype IFOPT oftype text {
+    	constraints: [ IFOPTConstraint ];
+	}
+
+	constraint NotEmptyConstraint oftype LengthConstraint {
+  		minLength: 1;
+	}
+
+	valuetype TextNotEmpty oftype text {
+    	constraints: [ NotEmptyConstraint ];
+	}
+
+	valuetype InegerNotEmpty oftype text {
+    	constraints: [ NotEmptyConstraint ];
+	}
+	
+	block TrainstopsExtractor oftype HttpExtractor {
+		url: "https://download-data.deutschebahn.com/static/datasets/haltestellen/D_Bahnhof_2020_alle.CSV";
+	}
+
+	pipe {
+		from: TrainstopsExtractor;
+		to: TrainstopsTextFileInterpreter;
+	}
+
+	block TrainstopsTextFileInterpreter oftype TextFileInterpreter {
+
+	}
+
+	pipe {
+		from: TrainstopsTextFileInterpreter;
+		to: TrainstopsCSVInterpreter;
+	}
+
+	block TrainstopsCSVInterpreter oftype CSVInterpreter {
+		enclosing: '"';
+        delimiter: ";";
+	}
+
+	pipe {
+		from: TrainstopsCSVInterpreter;
+		to: StatusColumnDeleter;
+	}
+
+	block StatusColumnDeleter oftype ColumnDeleter {
+  		delete: [column J];
+	}
+
+	pipe {
+	   	from: StatusColumnDeleter;
+	   	to: TrainstopsTableInterpreter;
+	}
+
+	block TrainstopsTableInterpreter oftype TableInterpreter {
+		header: true;
+		columns: [
+			"EVA_NR" oftype InegerNotEmpty,
+			"DS100" oftype TextNotEmpty,
+			"IFOPT" oftype IFOPT,
+			"NAME" oftype TextNotEmpty,
+			"Verkehr" oftype Verkehr,
+			"Laenge" oftype LaengeBreite,
+			"Breite" oftype LaengeBreite,
+			"Betreiber_Name" oftype TextNotEmpty,
+			"Betreiber_Nr" oftype InegerNotEmpty
+		];
+	}
+
+	pipe {
+		from: TrainstopsTableInterpreter;
+		to: TrainstopsLoader;
+	}
+	
+	block TrainstopsLoader oftype SQLiteLoader {
+		table: "trainstops";
+		file: "./trainstops.sqlite";
+	}
+
+
+}
