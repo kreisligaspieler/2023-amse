@@ -26,16 +26,20 @@ pipeline TrainstopsPipeline {
     	constraints: [ IFOPTConstraint ];
 	}
 
-	constraint NotEmptyConstraint oftype LengthConstraint {
+	constraint TextNotEmptyConstraint oftype LengthConstraint {
   		minLength: 1;
 	}
 
 	valuetype TextNotEmpty oftype text {
-    	constraints: [ NotEmptyConstraint ];
+    	constraints: [ TextNotEmptyConstraint ];
 	}
 
-	valuetype InegerNotEmpty oftype text {
-    	constraints: [ NotEmptyConstraint ];
+	constraint IntegerNotEmptyConstraint oftype RangeConstraint {
+  		lowerBound: 0;
+	}
+
+	valuetype InegerNotEmpty oftype integer {
+    	constraints: [ IntegerNotEmptyConstraint ];
 	}
 	
 	block TrainstopsExtractor oftype HttpExtractor {
