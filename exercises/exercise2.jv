@@ -19,7 +19,7 @@ pipeline TrainstopsPipeline {
 	}
 
 	constraint IFOPTConstraint oftype RegexConstraint {
-  		regex: /[a-z]{2}:\d+:\d+(:\d+)/;
+  		regex: /[a-z]{2}:\d+:\d+(:\d+)?/;
 	}
 
 	valuetype IFOPT oftype text {
