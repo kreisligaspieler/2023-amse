@@ -23,5 +23,5 @@ jobs:
 
 # Run test.sh
     - name: Test script
-      run: 
-        /project/test.sh
+      run: |
+        ./project/test.sh
