@@ -13,13 +13,13 @@ jobs:
       with:
         path: main
 
-    # Install python
+# Install python
     - name: Set up Python 3.11
       uses: actions/setup-python@v4
       with:
         python-version: 3.11
 
-    # Run test.sh
+# Run test.sh
     - name: Test script
       run: |
         ./,,/project/test.sh
