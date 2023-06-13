@@ -1,5 +1,5 @@
 name: Run project test 
- push:
+push:
     branches:
     - main
     paths:
