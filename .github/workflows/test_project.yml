@@ -41,5 +41,6 @@ jobs:
 
     # Run tests 
     - name: Run Shell Script and tests
+      working-directory: ./project
       run: |
-        ./project/tests.sh
+        ./tests.sh
