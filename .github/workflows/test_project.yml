@@ -11,8 +11,11 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v3
+    
+    - name: Set up Node
+      uses: actions/setup-node@v3
       with:
-        path: main
+        node-version: 'lts/*'
 
 # Install python
     - name: Set up Python 3.11
