@@ -2,7 +2,7 @@
 
 ## Summary
 
-This project analyzes the correlation between chlorophyll a in seawater which indicates changes in marine plants like phytoplankton and seawater temperature in the North and Baltic Seas of Germany. Data from 2018 and 2022 are analyzed to detect changes as well in chlorophyll a and temperature.
+This project analyzes a possible correlation between chlorophyll a in seawater which indicates changes in marine plants like phytoplankton and seawater temperature in the North and Baltic Seas of Germany. Data from 2018 and 2022 are analyzed to detect changes as well in chlorophyll a and temperature.
 ## Rationale
 
 This analysis helps detect the growth or reduction of marine plants, which are important for the maritime ecosystem, e.g., as food for animals and also for producing oxygen. It also shows the possible effect of water temperature on marine plants levels. This could help identify the reasons for the decline in animal populations as these animals eat marine plants as well as changes in CO<sub>2</sub> concentrations which might be affected by a change in the amount of CO<sub>2</sub> processing plants in the sea.
