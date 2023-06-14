@@ -28,8 +28,6 @@ jobs:
         
     # Change file permissions
     - name: Set execute permissions
-      with: 
-        branch=main  
       run:
         chmod +x ./project/tests.sh
         chmod +r ./data/requirements.txt
