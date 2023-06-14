@@ -30,8 +30,8 @@ jobs:
     - name: Set execute permissions
       working-directory: ./
       run: |
-        chmod +x ./project/tests.sh
-        chmod +r ./data/requirements.txt
+        chmod +x /project/tests.sh
+        chmod +r /data/requirements.txt
     
     # Install dependencies
     - name: Install dependecies
