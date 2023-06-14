@@ -28,7 +28,7 @@ jobs:
         
     # Change file permissions
     - name: Set execute permissions
-      run:
+      run: |
         chmod +x ./project/tests.sh
         chmod +r ./data/requirements.txt
     
