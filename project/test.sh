@@ -8,6 +8,7 @@ then
     echo "Database created."
 else
     echo "Database not found!"
+    exit(1)
 fi
 python3 ../data/checkData.py
 
