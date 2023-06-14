@@ -5,10 +5,16 @@ on:
   push:
     branches:
     - main
+    paths:
+      - '**'
+      - '!exercise/**'
 
 jobs:
   Automated_Testing_CI:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: project
     steps:
 
     - name: Checkout
