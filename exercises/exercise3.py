@@ -12,13 +12,13 @@ filter = df['CIN'].str.contains(patternDel, na=False)
 df = df[~filter]
 
 # convert to integer
-df['petrol']=pd.to_numeric(df['petrol'], downcast='integer', errors='coerce')
-df['diesel']=pd.to_numeric(df['diesel'], downcast='integer', errors='coerce')
-df['gas']=pd.to_numeric(df['gas'], downcast='integer', errors='coerce')
-df['electro']=pd.to_numeric(df['electro'], downcast='integer', errors='coerce')
-df['hybrid']=pd.to_numeric(df['hybrid'], downcast='integer', errors='coerce')
-df['plugInHybrid']=pd.to_numeric(df['plugInHybrid'], downcast='integer', errors='coerce')
-df['others']=pd.to_numeric(df['others'], downcast='integer', errors='coerce')
+df['petrol']=pd.to_numeric(df['petrol'], errors='coerce').convert_dtypes(convert_integer=True)
+df['diesel']=pd.to_numeric(df['diesel'], errors='coerce').convert_dtypes(convert_integer=True)
+df['gas']=pd.to_numeric(df['gas'], errors='coerce').convert_dtypes(convert_integer=True)
+df['electro']=pd.to_numeric(df['electro'], errors='coerce').convert_dtypes(convert_integer=True)
+df['hybrid']=pd.to_numeric(df['hybrid'], errors='coerce').convert_dtypes(convert_integer=True)
+df['plugInHybrid']=pd.to_numeric(df['plugInHybrid'], errors='coerce').convert_dtypes(convert_integer=True)
+df['others']=pd.to_numeric(df['others'], errors='coerce').convert_dtypes(convert_integer=True)
 
 # drop NaN
 df=df.dropna()
