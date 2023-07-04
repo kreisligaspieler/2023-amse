@@ -33,6 +33,15 @@ pipeline BaterytempraturePipeline {
     	constraints: [ TempratureConstraint ];
 	}
 	
+	constraint GeraetAktivConstraint oftype AllowlistConstraint {
+    	allowlist: [ "Ja", "Nein" ];
+	}
+
+	valuetype GeraetAktiv oftype text {
+		constraints: [GeraetAktivConstraint];
+	}
+
+	Geraet
     transform CelsiusToFahrenheit {
         from tempCelsius oftype decimal;
         to tempFahrenheit oftype decimal;
@@ -40,9 +49,7 @@ pipeline BaterytempraturePipeline {
     }
 
 	
-
-
-    block BaterytempratureFileDownloader oftype HttpExtractor {
+	block BaterytempratureFileDownloader oftype HttpExtractor {
         url: "https://www.mowesta.com/data/measure/mowesta-dataset-20221107.zip";
     }
 
@@ -166,9 +173,7 @@ pipeline BaterytempraturePipeline {
 			"Monat" oftype Month,
 			"Temperatur" oftype Temprature,
 			"Batterietemperatur" oftype Temprature,
-			"Geraet aktiv" oftype LaengeBreite
+			"Geraet aktiv" oftype Geraet
 		];
 	}
-Geraet", "Hersteller", "Model", "Monat", "Temperatur in °C (DWD)", "Batterietemperatur in °C", "Geraet aktiv"
-
 }
