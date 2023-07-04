@@ -26,7 +26,7 @@ pipeline BaterytempraturePipeline {
 	}
     
     constraint TemperatureConstraint oftype RangeConstraint {
-  		lowerBound: 0; 
+  		lowerBound: -273.15; 
 	}
 
 	valuetype Temperature oftype decimal {
