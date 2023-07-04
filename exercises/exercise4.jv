@@ -29,7 +29,7 @@ pipeline BaterytempraturePipeline {
   		lowerBound: 0; 
 	}
 
-	valuetype Temprature oftype integer {
+	valuetype Temprature oftype decimal {
     	constraints: [ TempratureConstraint ];
 	}
 	
@@ -44,7 +44,7 @@ pipeline BaterytempraturePipeline {
     transform CelsiusToFahrenheit {
         from tempCelsius oftype decimal;
         to tempFahrenheit oftype decimal;
-        tempFahrenheit: (tempCelsius * 9/5) + 32; 
+        tempFahrenheit: ((tempCelsius * 9/5) + 32); 
     }
 
 	
@@ -86,7 +86,6 @@ pipeline BaterytempraturePipeline {
 	}
 
 	block BaterytempratureCSVInterpreter oftype CSVInterpreter {
-		enclosing: '"';
         delimiter: ";";
 	}
 
