@@ -175,4 +175,14 @@ pipeline BaterytempraturePipeline {
 			"Geraet aktiv" oftype GeraetAktiv
 		];
 	}
+
+	pipe {
+		from: TableInterpreter;
+		to: Loader;
+	}
+	
+	block Loader oftype SQLiteLoader {
+		table: "temperatures";
+		file: "./temperatures.sqlite";
+	}
 }
