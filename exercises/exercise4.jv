@@ -172,7 +172,7 @@ pipeline BaterytempraturePipeline {
 			"Monat" oftype Month,
 			"Temperatur" oftype Temprature,
 			"Batterietemperatur" oftype Temprature,
-			"Geraet aktiv" oftype Geraet
+			"Geraet aktiv" oftype GeraetAktiv
 		];
 	}
 }
