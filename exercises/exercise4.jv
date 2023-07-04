@@ -138,17 +138,35 @@ pipeline BaterytempraturePipeline {
 
     pipe {
 		from: ColumnDeleter4;
-		to: TempratureTransformer;
+		to: TableInterpreter;
 	}
 
-    block TempratureTransformer oftype TableTransformer {
+    block TableInterpreter oftype TableInterpreter {
+		header: true;
+		columns: [
+			"Geraet" oftype InegerNotEmptyZero,
+			"Hersteller" oftype TextNotEmpty,
+			"Model" oftype TextNotEmpty,
+			"Monat" oftype Month,
+			"Temperatur in °C (DWD)" oftype Temprature,
+			"Batterietemperatur in °C)" oftype Temprature,
+			"Geraet aktiv" oftype GeraetAktiv
+		];
+	}
+
+	pipe {
+		from: TableInterpreter;
+		to: TemperatureTransformer;
+	}
+
+	 block TemperatureTransformer oftype TableTransformer {
         inputColumn: 'Temperatur in °C (DWD)';
         outputColumn: 'Temperatur';
         use: CelsiusToFahrenheit;
     }
 
     pipe {
-		from: TempratureTransformer;
+		from: TemperatureTransformer;
 		to: BatterytempratureTransformer;
 	}
 
@@ -160,27 +178,9 @@ pipeline BaterytempraturePipeline {
 
      pipe {
 		from: BatterytempratureTransformer;
-		to: TableInterpreter;
-	}
-
-    block TableInterpreter oftype TableInterpreter {
-		header: true;
-		columns: [
-			"Geraet" oftype InegerNotEmptyZero,
-			"Hersteller" oftype TextNotEmpty,
-			"Model" oftype TextNotEmpty,
-			"Monat" oftype Month,
-			"Temperatur" oftype Temprature,
-			"Batterietemperatur" oftype Temprature,
-			"Geraet aktiv" oftype GeraetAktiv
-		];
-	}
-
-	pipe {
-		from: TableInterpreter;
 		to: Loader;
 	}
-	
+
 	block Loader oftype SQLiteLoader {
 		table: "temperatures";
 		file: "./temperatures.sqlite";
