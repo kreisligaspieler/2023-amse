@@ -25,12 +25,12 @@ pipeline BaterytempraturePipeline {
     	constraints: [ MonthConstraint ];
 	}
     
-    constraint TempratureConstraint oftype RangeConstraint {
+    constraint TemperatureConstraint oftype RangeConstraint {
   		lowerBound: 0; 
 	}
 
-	valuetype Temprature oftype decimal {
-    	constraints: [ TempratureConstraint ];
+	valuetype Temperature oftype decimal {
+    	constraints: [ TemperatureConstraint ];
 	}
 	
 	constraint GeraetAktivConstraint oftype AllowlistConstraint {
@@ -100,6 +100,16 @@ pipeline BaterytempraturePipeline {
 
     pipe {
 		from: ColumnSelector;
+		to: ColmnDeleter;
+	}
+
+
+    block ColmnDeleter oftype ColumnDeleter {
+          delete: [column F, column G, column H, column I]; 
+	}
+
+	 pipe {
+		from: ColmnDeleter;
 		to: TableInterpreter;
 	}
 
@@ -112,8 +122,8 @@ pipeline BaterytempraturePipeline {
 			"Hersteller" oftype TextNotEmpty,
 			"Model" oftype TextNotEmpty,
 			"Monat" oftype Month,
-			"Temperatur in °C (DWD)" oftype Temprature,
-			"Batterietemperatur in °C" oftype Temprature,
+			"Temperatur in °C (DWD)" oftype Temperature,
+			"Batterietemperatur in °C" oftype Temperature,
 			"Geraet aktiv" oftype GeraetAktiv
 		];
 	}
@@ -125,7 +135,7 @@ pipeline BaterytempraturePipeline {
 
 	 block TemperatureTransformer oftype TableTransformer {
         inputColumn: 'Temperatur in °C (DWD)';
-        outputColumn: 'Temperatur in °C (DWD)';
+        outputColumn: 'Temperatur';
         use: CelsiusToFahrenheit;
     }
 
@@ -136,11 +146,11 @@ pipeline BaterytempraturePipeline {
 
     block BatterytempratureTransformer oftype TableTransformer {
         inputColumn: 'Batterietemperatur in °C';
-        outputColumn: 'Batterietemperatur in °C';
+        outputColumn: 'Batterietemperatur';
         use: CelsiusToFahrenheit;
     }
-
-     pipe {
+	
+    pipe {
 		from: BatterytempratureTransformer;
 		to: Loader;
 	}
