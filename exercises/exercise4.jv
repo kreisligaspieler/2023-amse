@@ -116,14 +116,14 @@ pipeline BaterytempraturePipeline {
   
 
     block TableInterpreter oftype TableInterpreter {
-		header: true;
+		header: false;
 		columns: [
 			"Geraet" oftype InegerNotEmptyZero,
 			"Hersteller" oftype TextNotEmpty,
 			"Model" oftype TextNotEmpty,
 			"Monat" oftype Month,
-			"Temperatur in °C (DWD)" oftype Temperature,
-			"Batterietemperatur in °C" oftype Temperature,
+			"Temperatur" oftype Temperature,
+			"Batterietemperatur" oftype Temperature,
 			"Geraet aktiv" oftype GeraetAktiv
 		];
 	}
@@ -134,7 +134,7 @@ pipeline BaterytempraturePipeline {
 	}
 
 	 block TemperatureTransformer oftype TableTransformer {
-        inputColumn: 'Temperatur in °C (DWD)';
+        inputColumn: 'Temperatur';
         outputColumn: 'Temperatur';
         use: CelsiusToFahrenheit;
     }
@@ -145,7 +145,7 @@ pipeline BaterytempraturePipeline {
 	}
 
     block BatterytempratureTransformer oftype TableTransformer {
-        inputColumn: 'Batterietemperatur in °C';
+        inputColumn: 'Batterietemperatur';
         outputColumn: 'Batterietemperatur';
         use: CelsiusToFahrenheit;
     }
