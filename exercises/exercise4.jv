@@ -1,0 +1,174 @@
+pipeline BaterytempraturePipeline {
+
+    constraint IntegerNotEmptyZeroConstraint oftype RangeConstraint {
+  		lowerBound: 1;
+	}
+
+	valuetype InegerNotEmptyZero oftype integer {
+    	constraints: [ IntegerNotEmptyZeroConstraint ];
+	}
+
+   constraint TextNotEmptyConstraint oftype LengthConstraint {
+  		minLength: 1;
+	}
+
+	valuetype TextNotEmpty oftype text {
+    	constraints: [ TextNotEmptyConstraint ];
+	}
+      
+    constraint MonthConstraint oftype RangeConstraint {
+  		lowerBound: 1;
+        upperBound: 12;
+	}
+
+	valuetype Month oftype integer {
+    	constraints: [ MonthConstraint ];
+	}
+    
+    constraint TempratureConstraint oftype RangeConstraint {
+  		lowerBound: 0; 
+	}
+
+	valuetype Temprature oftype integer {
+    	constraints: [ TempratureConstraint ];
+	}
+	
+    transform CelsiusToFahrenheit {
+        from tempCelsius oftype decimal;
+        to tempFahrenheit oftype decimal;
+        tempFahrenheit: (tempCelsius * 9/5) + 32; 
+    }
+
+	
+
+
+    block BaterytempratureFileDownloader oftype HttpExtractor {
+        url: "https://www.mowesta.com/data/measure/mowesta-dataset-20221107.zip";
+    }
+
+
+	pipe {
+		from: BaterytempratureFileDownloader;
+		to: BaterytempratureFileExtractor;
+	}
+
+    block BaterytempratureFileExtractor oftype ArchiveInterpreter {
+        archiveType: "zip";
+    }
+    
+    pipe {
+		from: BaterytempratureFileExtractor;
+		to: BaterytempratureFilePicker;
+	}
+
+	block BaterytempratureFilePicker oftype FilePicker {
+        path: "/data.csv";
+    }
+
+    pipe {
+		from: BaterytempratureFilePicker;
+		to: BaterytempratureFileInterpreter;
+	}
+
+    block BaterytempratureFileInterpreter oftype TextFileInterpreter {
+
+	}
+
+    pipe {
+		from: BaterytempratureFileInterpreter;
+		to: BaterytempratureCSVInterpreter;
+	}
+
+	block BaterytempratureCSVInterpreter oftype CSVInterpreter {
+		enclosing: '"';
+        delimiter: ";";
+	}
+
+	pipe {
+		from: BaterytempratureCSVInterpreter;
+		to: ColumnSelector;
+	}
+
+    block ColumnSelector oftype CellRangeSelector {
+        select: range A1:K*;
+	}
+
+    pipe {
+		from: ColumnSelector;
+		to: ColumnDeleter1;
+	}
+
+    block ColumnDeleter1 oftype ColumnDeleter { 
+  		delete: [column F];
+	}
+
+    pipe {
+		from: ColumnDeleter1;
+		to: ColumnDeleter2;
+	}
+
+    block ColumnDeleter2 oftype ColumnDeleter { 
+        delete: [column G];
+	}
+
+    pipe {
+		from: ColumnDeleter2;
+		to: ColumnDeleter3;
+	}
+
+    block ColumnDeleter3 oftype ColumnDeleter { 
+  		delete: [column H];
+	}
+
+       pipe {
+		from: ColumnDeleter3;
+		to: ColumnDeleter4;
+	}
+
+    block ColumnDeleter4 oftype ColumnDeleter { 
+  		delete: [column I];
+	}
+
+
+    pipe {
+		from: ColumnDeleter4;
+		to: TempratureTransformer;
+	}
+
+    block TempratureTransformer oftype TableTransformer {
+        inputColumn: 'Temperatur in °C (DWD)';
+        outputColumn: 'Temperatur';
+        use: CelsiusToFahrenheit;
+    }
+
+    pipe {
+		from: TempratureTransformer;
+		to: BatterytempratureTransformer;
+	}
+
+    block BatterytempratureTransformer oftype TableTransformer {
+        inputColumn: 'Batterietemperatur in °C)';
+        outputColumn: 'Batterietemperatur';
+        use: CelsiusToFahrenheit;
+    }
+
+     pipe {
+		from: BatterytempratureTransformer;
+		to: TableInterpreter;
+	}
+
+    block TableInterpreter oftype TableInterpreter {
+		header: true;
+		columns: [
+			"Geraet" oftype InegerNotEmptyZero,
+			"Hersteller" oftype TextNotEmpty,
+			"Model" oftype TextNotEmpty,
+			"Monat" oftype Month,
+			"Temperatur" oftype Temprature,
+			"Batterietemperatur" oftype Temprature,
+			"Geraet aktiv" oftype LaengeBreite
+		];
+	}
+Geraet", "Hersteller", "Model", "Monat", "Temperatur in °C (DWD)", "Batterietemperatur in °C", "Geraet aktiv"
+
+}
