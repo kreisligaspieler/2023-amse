@@ -101,47 +101,10 @@ pipeline BaterytempraturePipeline {
 
     pipe {
 		from: ColumnSelector;
-		to: ColumnDeleter1;
-	}
-
-    block ColumnDeleter1 oftype ColumnDeleter { 
-  		delete: [column F];
-	}
-
-    pipe {
-		from: ColumnDeleter1;
-		to: ColumnDeleter2;
-	}
-
-
-	// G becomes F after deleting F and so on
-    block ColumnDeleter2 oftype ColumnDeleter { 
-        delete: [column F];
-	}
-
-    pipe {
-		from: ColumnDeleter2;
-		to: ColumnDeleter3;
-	}
-
-    block ColumnDeleter3 oftype ColumnDeleter { 
-  		delete: [column F];
-	}
-
-       pipe {
-		from: ColumnDeleter3;
-		to: ColumnDeleter4;
-	}
-
-    block ColumnDeleter4 oftype ColumnDeleter { 
-  		delete: [column F];
-	}
-
-
-    pipe {
-		from: ColumnDeleter4;
 		to: TableInterpreter;
 	}
+
+  
 
     block TableInterpreter oftype TableInterpreter {
 		header: true;
@@ -151,7 +114,7 @@ pipeline BaterytempraturePipeline {
 			"Model" oftype TextNotEmpty,
 			"Monat" oftype Month,
 			"Temperatur in °C (DWD)" oftype Temprature,
-			"Batterietemperatur in °C)" oftype Temprature,
+			"Batterietemperatur in °C" oftype Temprature,
 			"Geraet aktiv" oftype GeraetAktiv
 		];
 	}
@@ -163,7 +126,7 @@ pipeline BaterytempraturePipeline {
 
 	 block TemperatureTransformer oftype TableTransformer {
         inputColumn: 'Temperatur in °C (DWD)';
-        outputColumn: 'Temperatur';
+        outputColumn: 'Temperatur in °C (DWD)';
         use: CelsiusToFahrenheit;
     }
 
@@ -173,8 +136,8 @@ pipeline BaterytempraturePipeline {
 	}
 
     block BatterytempratureTransformer oftype TableTransformer {
-        inputColumn: 'Batterietemperatur in °C)';
-        outputColumn: 'Batterietemperatur';
+        inputColumn: 'Batterietemperatur in °C';
+        outputColumn: 'Batterietemperatur in °C';
         use: CelsiusToFahrenheit;
     }
 
