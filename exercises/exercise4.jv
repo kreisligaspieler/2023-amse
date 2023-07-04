@@ -113,8 +113,10 @@ pipeline BaterytempraturePipeline {
 		to: ColumnDeleter2;
 	}
 
+
+	// G becomes F after deleting F and so on
     block ColumnDeleter2 oftype ColumnDeleter { 
-        delete: [column G];
+        delete: [column F];
 	}
 
     pipe {
@@ -123,7 +125,7 @@ pipeline BaterytempraturePipeline {
 	}
 
     block ColumnDeleter3 oftype ColumnDeleter { 
-  		delete: [column H];
+  		delete: [column F];
 	}
 
        pipe {
@@ -132,7 +134,7 @@ pipeline BaterytempraturePipeline {
 	}
 
     block ColumnDeleter4 oftype ColumnDeleter { 
-  		delete: [column I];
+  		delete: [column F];
 	}
 
 
