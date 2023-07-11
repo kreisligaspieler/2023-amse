@@ -3,4 +3,6 @@
 /exercises/trainstops.sqlite
 /exercises/cars.sqlite
 /exercises/temperatures.sqlite
+/exercises/GTFS.zip
+/exercises/gtfs.sqlite
 !.gitignore
