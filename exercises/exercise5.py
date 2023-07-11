@@ -24,6 +24,6 @@ df_validated = df[~invalid_rows_mask]
 
 # drop NaN
 df=df.dropna()
-df.to_sql("stop", con=engine, index=False)
+df.to_sql("stops", con=engine, index=False)
 
 
